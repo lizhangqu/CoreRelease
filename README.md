@@ -1,3 +1,72 @@
+# 微店定制部分
+
+ - 支持version的key自定义
+
+依赖
+
+```
+buildscript {
+  dependencies {
+     classpath 'com.vdian.android.lib:gradle-release:1.0.0'
+  }
+}
+```
+
+应用
+```
+apply plugin: 'android.release'
+
+//同时也支持，效果一样
+//apply plugin: 'weidian.release'
+//apply plugin: 'vdian.release'
+//apply plugin: 'net.researchgate.release'
+```
+
+所有配置项，值为默认值，选择性使用
+```
+release {
+    failOnCommitNeeded = true // 本地有文件未提交，构建失败
+    failOnPublishNeeded = true // 本地代码未push，构建失败
+    failOnSnapshotDependencies = true // 依赖了SNAPSHOT包，构建失败
+    failOnUnversionedFiles = true // 本地有未进行版本追踪的文件，构建失败
+    failOnUpdateNeeded = true // 未将远端代码更新至本地，构建失败
+    revertOnFail = true // 构建发生错误时，回滚插件的提交
+    preCommitText = ''  // 插件创建的提交的message
+    preTagCommitMessage = '[Gradle Release Plugin] - pre tag commit: ' // 如果存在snapshot版本，去snapshot字样时使用的message
+    tagCommitMessage = '[Gradle Release Plugin] - creating tag: ' // 创建tag的message
+    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: ' // 创建新版本的message
+    tagTemplate = '${version}' // tag的模板，内部使用模板引擎渲染，支持${name}和${version}
+    versionPropertyFile = 'gradle.properties' // 版本号所在文件
+    versionProperties = [] //需要同步更新的版本号属性
+    versionKey = null // 默认使用version作为key，当需要自定义时，设置此值
+    buildTasks = ['build'] // 构建的task，建议设置为 assembleRelease
+    versionPatterns = [
+        /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1] as int) + 1}${m[0][2]}") }
+    ] //版本匹配正则
+    
+    scmAdapters = [
+        net.researchgate.release.GitAdapter,
+        net.researchgate.release.SvnAdapter,
+        net.researchgate.release.HgAdapter,
+        net.researchgate.release.BzrAdapter
+    ]
+
+    git {
+        requireBranch = 'master' // 构建需要的分支
+        pushToRemote = 'origin' // push的远端
+        pushToBranchPrefix = ''
+        commitVersionFileOnly = false
+        signTag = false
+    }
+
+    svn {
+        username = null
+        password = null
+        pinExternals = false   // allows to pin the externals when tagging, requires subversion client >= 1.9.0
+    }
+}
+```
+
 # gradle-release plugin
 
 [![Build Status](https://travis-ci.org/researchgate/gradle-release.svg?branch=master)](https://travis-ci.org/researchgate/gradle-release)

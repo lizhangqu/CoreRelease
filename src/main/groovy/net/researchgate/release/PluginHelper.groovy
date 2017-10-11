@@ -171,6 +171,9 @@ class PluginHelper {
             attributes.versionModified = true
             project.subprojects?.each { it.version = newVersion }
             List<String> versionProperties = extension.versionProperties + 'version'
+            if (extension.versionKey != null && !versionProperties.contains(extension.versionKey)) {
+                versionProperties.add(extension.versionKey) //to update version
+            }
             versionProperties.each { writeVersion(findPropertiesFile(), it, project.version) }
         }
     }

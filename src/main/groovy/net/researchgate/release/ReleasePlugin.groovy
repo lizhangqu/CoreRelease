@@ -275,14 +275,22 @@ class ReleasePlugin extends PluginHelper implements Plugin<Project> {
         Properties properties = new Properties()
         propertiesFile.withReader { properties.load(it) }
 
-        assert properties.version, "[$propertiesFile.canonicalPath] contains no 'version' property"
-        assert extension.versionPatterns.keySet().any { (properties.version =~ it).find() },
-            "[$propertiesFile.canonicalPath] version [$properties.version] doesn't match any of known version patterns: " +
+        def version
+        try {
+            assert properties.version, "[$propertiesFile.canonicalPath] contains no 'version' property"
+            version = properties.version
+        } catch (AssertionError e) {
+            assert extension.versionKey, "${e.getMessage()} and there is no versionKey found in plugin extension"
+            assert (version = properties.getProperty(extension.versionKey)), "[$propertiesFile.canonicalPath] contains no '${extension.versionKey}' property"
+        }
+
+        assert extension.versionPatterns.keySet().any { (version =~ it).find() },
+            "[$propertiesFile.canonicalPath] version [$version] doesn't match any of known version patterns: " +
                 extension.versionPatterns.keySet()
 
         // set the project version from the properties file if it was not otherwise specified
         if (!isVersionDefined()) {
-            project.version = properties.version
+            project.version = version
         }
     }
 

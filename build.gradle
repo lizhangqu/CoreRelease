@@ -82,6 +82,73 @@ artifactory {
     }
 }
 
-afterReleaseBuild.dependsOn bintrayUpload
+
+apply plugin: 'maven'
+def readPropertyFromLocalProperties(String key) {
+    Properties properties = new Properties()
+    try {
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    } catch (Exception e) {
+        println("load local properties failed msg:${e.message}")
+    }
+    return properties.getProperty(key)
+}
+
+def getReleaseRepositoryUrl() {
+    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL : readPropertyFromLocalProperties('RELEASE_REPOSITORY_URL')
+}
+
+def getSnapshotRepositoryUrl() {
+    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL : readPropertyFromLocalProperties('SNAPSHOT_REPOSITORY_URL')
+}
+
+def getReleaseRepositoryUsername() {
+    return hasProperty('RELEASE_REPOSITORY_USERNAME') ? RELEASE_REPOSITORY_USERNAME : readPropertyFromLocalProperties('RELEASE_REPOSITORY_USERNAME')
+}
+
+def getReleaseRepositoryPassword() {
+    return hasProperty('RELEASE_REPOSITORY_PASSWORD') ? RELEASE_REPOSITORY_PASSWORD : readPropertyFromLocalProperties('RELEASE_REPOSITORY_PASSWORD')
+}
+
+def getSnapshotRepositoryUsername() {
+    return hasProperty('SNAPSHOT_REPOSITORY_USERNAME') ? SNAPSHOT_REPOSITORY_USERNAME : readPropertyFromLocalProperties('SNAPSHOT_REPOSITORY_USERNAME')
+}
+
+def getSnapshotRepositoryPassword() {
+    return hasProperty('SNAPSHOT_REPOSITORY_PASSWORD') ? SNAPSHOT_REPOSITORY_PASSWORD : readPropertyFromLocalProperties('SNAPSHOT_REPOSITORY_PASSWORD')
+}
+
+def getPomGroupId() {
+    return hasProperty('PROJECT_POM_GROUP') ? PROJECT_POM_GROUP : readPropertyFromLocalProperties('PROJECT_POM_GROUP')
+}
+
+def getPomArtifactId() {
+    return hasProperty('PROJECT_POM_ARTIFACT_ID') ? PROJECT_POM_ARTIFACT_ID : readPropertyFromLocalProperties('PROJECT_POM_ARTIFACT_ID')
+}
+
+def getPomVersion() {
+    return hasProperty('PROJECT_POM_VERSION') ? PROJECT_POM_VERSION : readPropertyFromLocalProperties('PROJECT_POM_VERSION')
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = getPomGroupId()
+            pom.artifactId = getPomArtifactId()
+            pom.version = getPomVersion()
+
+            repository(url: getReleaseRepositoryUrl()) {
+                authentication(userName: getReleaseRepositoryUsername(), password: getReleaseRepositoryPassword())
+            }
+            snapshotRepository(url: getSnapshotRepositoryUrl()) {
+                authentication(userName: getSnapshotRepositoryUsername(), password: getSnapshotRepositoryPassword())
+            }
+        }
+    }
+}
+
+
+afterReleaseBuild.dependsOn uploadArchives
 
 wrapper.gradleVersion = '1.12'
+

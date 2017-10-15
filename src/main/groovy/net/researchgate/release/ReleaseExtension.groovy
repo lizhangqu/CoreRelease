@@ -49,6 +49,11 @@ class ReleaseExtension {
 
     List buildTasks = ['build']
 
+    /**
+     * custom the version key in properties
+     */
+    String versionKey
+
     Map<String, Closure<String>> versionPatterns = [
         // Increments last number: "2.5-SNAPSHOT" => "2.6-SNAPSHOT"
         /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1] as int) + 1}${m[0][2]}") }

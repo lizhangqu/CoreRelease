@@ -16,7 +16,7 @@ apply plugin: 'nu.studer.plugindev'
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'net.researchgate.release'
 
-group='net.researchgate'
+group='io.github.lizhangqu'
 
 dependencies {
     testCompile("org.spockframework:spock-core:$spockVersion") { exclude group: 'org.codehaus.groovy' }

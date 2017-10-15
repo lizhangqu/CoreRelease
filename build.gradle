@@ -50,7 +50,6 @@ bintray {
     key = project.hasProperty('bintrayApiKey') ? bintrayApiKey : ''
     pkg {
         repo = 'gradle-plugins'
-        userOrg = 'researchgate'
         version {
             gpg {
                 sign = false

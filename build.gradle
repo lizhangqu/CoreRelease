@@ -49,7 +49,7 @@ bintray {
     user = project.hasProperty('bintrayUser') ? bintrayUser : ''
     key = project.hasProperty('bintrayApiKey') ? bintrayApiKey : ''
     pkg {
-        repo = 'gradle-plugins'
+        repo = 'maven'
         version {
             gpg {
                 sign = false

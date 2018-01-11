@@ -16,10 +16,6 @@ apply plugin: 'idea'
 //apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'core.publish'
 
-ext {
-    PROJECT_POM_GROUP_ID = 'io.github.lizhangqu'
-}
-
 group = 'io.github.lizhangqu'
 archivesBaseName = 'core-release'
 

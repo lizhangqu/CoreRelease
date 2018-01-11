@@ -41,7 +41,7 @@ plugindev {
 release {
     buildTasks = ['assemble']
     git {
-        requireBranch = '(master|\\d+\\.\\d+)'
+        requireBranch = '(master|upstream-github/master|\\d+\\.\\d+)'
     }
 }
 

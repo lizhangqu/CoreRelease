@@ -42,6 +42,7 @@ dependencies {
 //}
 
 release {
+    buildTasks = ['assemble']
     git {
         requireBranch = '(master|upstream-github/master|\\d+\\.\\d+)'
         pushToRemote = 'upstream-github'

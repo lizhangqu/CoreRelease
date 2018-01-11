@@ -20,6 +20,8 @@ group = 'io.github.lizhangqu'
 archivesBaseName = 'core-release'
 
 dependencies {
+    compile localGroovy()
+    compile gradleApi()
 //    testCompile("org.spockframework:spock-core:$spockVersion") { exclude group: 'org.codehaus.groovy' }
 //    testCompile "junit:junit:$junitVersion"
 //    testCompile "org.eclipse.jgit:org.eclipse.jgit:$jgitVersion"

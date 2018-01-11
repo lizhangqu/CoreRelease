@@ -3,41 +3,41 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.3.0'
-        classpath 'nu.studer:gradle-plugindev-plugin:1.0.4'
-        classpath 'org.codehaus.groovy:groovy-backports-compat23:2.4.6'
+//        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.3.0'
+//        classpath 'nu.studer:gradle-plugindev-plugin:1.0.4'
+//        classpath 'org.codehaus.groovy:groovy-backports-compat23:2.4.6'
         classpath 'io.github.lizhangqu:core-publish:1.2.1'
     }
 }
 
 apply plugin: 'groovy'
 apply plugin: 'idea'
-apply plugin: 'nu.studer.plugindev'
-apply plugin: 'com.jfrog.artifactory'
+//apply plugin: 'nu.studer.plugindev'
+//apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'core.publish'
 
 group = 'io.github.lizhangqu'
 archivesBaseName = 'core-release'
 
 dependencies {
-    testCompile("org.spockframework:spock-core:$spockVersion") { exclude group: 'org.codehaus.groovy' }
-    testCompile "junit:junit:$junitVersion"
-    testCompile "org.eclipse.jgit:org.eclipse.jgit:$jgitVersion"
-    testCompile "cglib:cglib-nodep:$cglibVersion"
+//    testCompile("org.spockframework:spock-core:$spockVersion") { exclude group: 'org.codehaus.groovy' }
+//    testCompile "junit:junit:$junitVersion"
+//    testCompile "org.eclipse.jgit:org.eclipse.jgit:$jgitVersion"
+//    testCompile "cglib:cglib-nodep:$cglibVersion"
 }
 
-plugindev {
-    pluginImplementationClass 'net.researchgate.release.ReleasePlugin'
-    pluginDescription 'gradle-release is a plugin for providing a Maven-like release process to project using Gradle.'
-    pluginLicenses 'MIT'
-    pluginTags 'gradle', 'plugin', 'release'
-    authorId 'danez'
-    authorName 'Daniel Tschinder'
-    authorEmail 'daniel.tschinder@researchgate.net'
-    projectUrl 'https://github.com/researchgate/gradle-release'
-    projectInceptionYear '2011'
-    done() // do not omit this
-}
+//plugindev {
+//    pluginImplementationClass 'net.researchgate.release.ReleasePlugin'
+//    pluginDescription 'gradle-release is a plugin for providing a Maven-like release process to project using Gradle.'
+//    pluginLicenses 'MIT'
+//    pluginTags 'gradle', 'plugin', 'release'
+//    authorId 'danez'
+//    authorName 'Daniel Tschinder'
+//    authorEmail 'daniel.tschinder@researchgate.net'
+//    projectUrl 'https://github.com/researchgate/gradle-release'
+//    projectInceptionYear '2011'
+//    done() // do not omit this
+//}
 
 release {
     git {

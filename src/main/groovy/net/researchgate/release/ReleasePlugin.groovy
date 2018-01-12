@@ -236,6 +236,11 @@ class ReleasePlugin extends PluginHelper implements Plugin<Project> {
                     nextVersion += '-SNAPSHOT'
                 }
 
+                //让新版本永远为SNAPSHOT更新
+                if (!nextVersion.endsWith('-SNAPSHOT')) {
+                    nextVersion += '-SNAPSHOT'
+                }
+
                 nextVersion = getNextVersion(nextVersion)
                 updateVersionProperty(nextVersion)
 

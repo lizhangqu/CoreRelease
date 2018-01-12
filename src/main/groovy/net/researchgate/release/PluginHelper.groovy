@@ -170,14 +170,22 @@ class PluginHelper {
         String oldVersion = project.version as String
         if (oldVersion != newVersion) {
             project.version = newVersion
-            attributes.versionModified = true
-            project.subprojects?.each { it.version = newVersion }
-            List<String> versionProperties = extension.versionProperties + 'version'
-            if (extension.versionKey != null && !versionProperties.contains(extension.versionKey)) {
-                versionProperties.add(extension.versionKey) //to update version
-            }
-            versionProperties.each { writeVersion(findPropertiesFile(), it, project.version) }
+            updateVersionPropertyFile(newVersion)
         }
+    }
+
+    void updateVersionPropertyFile(String newVersion) {
+        attributes.versionModified = true
+        project.subprojects?.each { it.version = newVersion }
+        List<String> versionProperties = extension.versionProperties + 'version'
+        if (extension.versionKey != null && !versionProperties.contains(extension.versionKey)) {
+            versionProperties.add(extension.versionKey) //to update version
+        }
+        versionProperties.each { writeVersion(findPropertiesFile(), it, project.version) }
+    }
+
+    void updateVersionPropertyWhenFileNotEqual(String newVersion) {
+        updateVersionPropertyFile(newVersion)
     }
 
     /**

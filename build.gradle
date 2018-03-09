@@ -85,5 +85,5 @@ plugindev {
 //    }
 //}
 
-wrapper.gradleVersion = '3.3'
+wrapper.gradleVersion = '2.10'
 

@@ -255,7 +255,10 @@ class ReleasePlugin extends PluginHelper implements Plugin<Project> {
 
     String getNextVersion(String candidateVersion) {
         String nextVersion = findProperty('release.newVersion', null, 'newVersion')
-
+        //让新版本永远为SNAPSHOT更新
+        if (!nextVersion.endsWith('-SNAPSHOT')) {
+            nextVersion += '-SNAPSHOT'
+        }
         if (useAutomaticVersion()) {
             return nextVersion ?: candidateVersion
         }

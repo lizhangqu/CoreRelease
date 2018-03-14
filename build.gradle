@@ -30,10 +30,10 @@ apply plugin: 'nu.studer.plugindev'
 apply plugin: 'com.jfrog.artifactory'
 
 dependencies {
-    testCompile("org.spockframework:spock-core:$spockVersion") { exclude group: 'org.codehaus.groovy' }
-    testCompile "junit:junit:$junitVersion"
-    testCompile "org.eclipse.jgit:org.eclipse.jgit:$jgitVersion"
-    testCompile "cglib:cglib-nodep:$cglibVersion"
+//    testCompile("org.spockframework:spock-core:$spockVersion") { exclude group: 'org.codehaus.groovy' }
+//    testCompile "junit:junit:$junitVersion"
+//    testCompile "org.eclipse.jgit:org.eclipse.jgit:$jgitVersion"
+//    testCompile "cglib:cglib-nodep:$cglibVersion"
 }
 apply plugin: 'android.publish'
 

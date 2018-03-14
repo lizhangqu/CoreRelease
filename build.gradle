@@ -18,7 +18,12 @@ buildscript {
         it.resolutionStrategy.cacheChangingModulesFor(0, 'seconds')
     }
 }
-
+repositories {
+    maven {
+        url 'http://nexus.vdian.net/repository/maven-public/'
+    }
+    jcenter()
+}
 apply plugin: 'groovy'
 apply plugin: 'idea'
 apply plugin: 'nu.studer.plugindev'
@@ -44,7 +49,6 @@ plugindev {
     projectInceptionYear '2011'
     done() // do not omit this
 }
-
 
 //bintray {
 //    user = project.hasProperty('bintrayUser') ? bintrayUser : ''

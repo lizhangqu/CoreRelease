@@ -196,10 +196,11 @@ class ReleasePlugin extends PluginHelper implements Plugin<Project> {
     void unSnapshotVersion() {
         def versionFromFile = checkPropertiesFile()
         def version = project.version.toString()
-
+        attributes.latestReleaseVersion = version
         if (version.contains('-SNAPSHOT')) {
             attributes.usesSnapshot = true
             version -= '-SNAPSHOT'
+            attributes.latestReleaseVersion = version
             updateVersionProperty(version)
         } else if (versionFromFile != null && versionFromFile.toString() != version) {
             updateVersionPropertyWhenFileNotEqual(version)

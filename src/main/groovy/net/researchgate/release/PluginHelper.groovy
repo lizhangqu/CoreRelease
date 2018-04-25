@@ -92,12 +92,12 @@ class PluginHelper {
     protected void writeVersion(File file, String key, version) {
         try {
             if (!file.file) {
-                project.ant.echo(file: file, message: "$key=$version //latest release version=${getReleaseVersion()}")
+                project.ant.echo(file: file, message: "$key=$version \n#latest release version=${getReleaseVersion()}")
             } else {
                 // we use replace here as other ant tasks escape and modify the whole file
                 project.ant.replaceregexp(file: file, byline: true) {
                     regexp(pattern: "^(\\s*)$key((\\s*[=|:]\\s*)|(\\s+)).+\$")
-                    substitution(expression: "\\1$key\\2$version //latest release version=${getReleaseVersion()}")
+                    substitution(expression: "\\1$key\\2$version \n#latest release version=${getReleaseVersion()}")
                 }
             }
         } catch (BuildException be) {

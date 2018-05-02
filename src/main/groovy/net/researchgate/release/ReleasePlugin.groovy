@@ -190,7 +190,11 @@ class ReleasePlugin extends PluginHelper implements Plugin<Project> {
         if (attributes.propertiesFileCreated) {
             return
         }
-        updateVersionProperty(getReleaseVersion())
+        String releaseVersion = getReleaseVersion()
+        if (releaseVersion != attributes.latestReleaseVersion) {
+            attributes.latestReleaseVersion = releaseVersion
+        }
+        updateVersionProperty(releaseVersion)
     }
 
     void unSnapshotVersion() {

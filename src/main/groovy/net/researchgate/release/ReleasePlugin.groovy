@@ -190,16 +190,21 @@ class ReleasePlugin extends PluginHelper implements Plugin<Project> {
         if (attributes.propertiesFileCreated) {
             return
         }
-        updateVersionProperty(getReleaseVersion())
+        String releaseVersion = getReleaseVersion()
+        if (releaseVersion != attributes.latestReleaseVersion) {
+            attributes.latestReleaseVersion = releaseVersion
+        }
+        updateVersionProperty(releaseVersion)
     }
 
     void unSnapshotVersion() {
         def versionFromFile = checkPropertiesFile()
         def version = project.version.toString()
-
+        attributes.latestReleaseVersion = version
         if (version.contains('-SNAPSHOT')) {
             attributes.usesSnapshot = true
             version -= '-SNAPSHOT'
+            attributes.latestReleaseVersion = version
             updateVersionProperty(version)
         } else if (versionFromFile != null && versionFromFile.toString() != version) {
             updateVersionPropertyWhenFileNotEqual(version)
@@ -255,7 +260,10 @@ class ReleasePlugin extends PluginHelper implements Plugin<Project> {
 
     String getNextVersion(String candidateVersion) {
         String nextVersion = findProperty('release.newVersion', null, 'newVersion')
-
+        //让新版本永远为SNAPSHOT更新
+        if (nextVersion != null && !nextVersion.endsWith('-SNAPSHOT')) {
+            nextVersion += '-SNAPSHOT'
+        }
         if (useAutomaticVersion()) {
             return nextVersion ?: candidateVersion
         }
@@ -292,8 +300,8 @@ class ReleasePlugin extends PluginHelper implements Plugin<Project> {
         }
 
         assert extension.versionPatterns.keySet().any { (version =~ it).find() },
-                "[$propertiesFile.canonicalPath] version [$version] doesn't match any of known version patterns: " +
-                        extension.versionPatterns.keySet()
+            "[$propertiesFile.canonicalPath] version [$version] doesn't match any of known version patterns: " +
+                extension.versionPatterns.keySet()
 
         // set the project version from the properties file if it was not otherwise specified
         if (!isVersionDefined()) {

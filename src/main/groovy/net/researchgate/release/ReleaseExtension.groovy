@@ -45,6 +45,11 @@ class ReleaseExtension {
 
     String versionPropertyFile = 'gradle.properties'
 
+    /**
+     * custom the version key in properties
+     */
+    String versionKey
+
     List versionProperties = []
 
     List buildTasks = ['build']
